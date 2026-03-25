@@ -5,56 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
-    <script src="app.js"></script>
 </head>
 <body>
 
  <header class="header">
-    <h1>Kanto Pokédex</h1>
-    <p>Displaying the first 151 Pokémon</p>
+    <h1 class="title">Kanto Pokédex</h1>
+    <p class="header__para">Displaying the first 151 Pokémon</p>
   </header>
     <div class="search-bar">
-        <input type="text" id="pokemonName" placeholder="Search Pokémon by name..." />
+        <input type="text" class="pokemonName" placeholder="Search Pokémon by name..." onchange="onSearchChange(event)">
         <button onclick="fetchData()">Search</button>
 
-        <img src="" alt="Pokemon Sprite" id="pokemonSprite" style="display:none; width: 200px; height: 200px; object-fit: contain; image-rendering: auto;">
+        <img class="input__img" src="" alt="Pokemon Sprite" id="pokemonSprite">
     </div>
     
   <main>
 
     <div class="pokemon__grid">
-        <div id="poke-container" class="poke-container">
-            <div class="pokemon-card">
-                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png" alt="Pokémon 1">
-                <h4>bulbasaur</h4>
-                <p>#1</p>
-                <ul>
-                    <li>grass</li>
-                    <li>poison</li>
-                </ul>
-            </div>
-            <div class="pokemon-card">
-                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png" alt="Pokémon 1">
-                <h4>bulbasaur</h4>
-                <p>#1</p>
-                <ul>
-                    <li>grass</li>
-                    <li>poison</li>
-                </ul>
-            </div>
-            <div class="pokemon-card">
-                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png" alt="Pokémon 1">
-                <h4>bulbasaur</h4>
-                <p>#1</p>
-                <ul>
-                    <li>grass</li>
-                    <li>poison</li>
-                </ul>
-            </div>
+        <div class="pokemon-card">
+            <img src="" alt="Pokémon sprites">
+            <h4>pokemonName</h4>
+            <p>#</p>
+            <ul>
+                <li>type</li>
+                <li>type</li>
+            </ul>
         </div>
     </div>
     
   </main>
+
+    <script src="app.js"></script>
 
 </body>
 </html>
