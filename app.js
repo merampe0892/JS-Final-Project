@@ -2,37 +2,57 @@ const grid = document.querySelector('.pokemon__grid');
 const teamContainer = document.querySelector('.team__container');
 const searchInput = document.getElementById('pokemonName');
 const searchBtn = document.getElementById('searchBtn');
+const typeFilter = document.getElementById('typeFilter');
+const sortBtn = document.getElementById('sortBtn');
 const errorDiv = document.getElementById('error');
 
 const MAX_TEAM_SIZE = 6;
 let team = [];
-let lastSearchedPokemon = null; 
+let lastSearchedPokemon = null;
+let allKantoPokemon = []; 
 
 async function fetchKantoPokemon() {
-  
-    const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151&offset=0'); 
+  try {
+    const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151&offset=0');
     const allPokemon = await response.json();
 
     const detailPromises = allPokemon.results.map(async (pokemon) => {
       const res = await fetch(pokemon.url);
-      const pokemonData = await res.json();
-      return pokemonData;
+      return await res.json();
     });
 
-    const pokemonDetails = await Promise.all(detailPromises);
+    allKantoPokemon = await Promise.all(detailPromises); 
+    applyTypeSort(); 
+  } catch (error) {
+    console.error('Error fetching Kanto Pokémon:', error);
+    errorDiv.textContent = 'Error loading Kanto Pokémon.';
+  }
+}
 
-    grid.innerHTML = '';
-    const cardsHtml = pokemonDetails.map(pokemonData =>
-      buildPokemonCardHtml(pokemonData, false)
-    ).join('');
-    grid.innerHTML = cardsHtml;
- 
+function applyTypeSort() {
+  let filteredPokemon = [...allKantoPokemon];
+
+  const selectedType = typeFilter.value;
+  if (selectedType) {
+    filteredPokemon = filteredPokemon.filter(pokemon => 
+      pokemon.types[0].type.name === selectedType
+    );
+  }
+
+  filteredPokemon.sort((a, b) => a.name.localeCompare(b.name));
+
+  grid.innerHTML = '';
+  const cardsHtml = filteredPokemon.map(pokemon => 
+    buildPokemonCardHtml(pokemon, false)
+  ).join('');
+  grid.innerHTML = cardsHtml;
 }
 
 async function searchPokemon() {
   const query = searchInput.value.trim().toLowerCase();
   if (!query) {
     errorDiv.textContent = 'Type a Pokémon name or ID.';
+    applyTypeSort(); 
     return;
   }
 
@@ -40,13 +60,12 @@ async function searchPokemon() {
     errorDiv.textContent = '';
     grid.innerHTML = 'Loading...';
 
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${query}`); 
-    if (!response.ok) {
-      throw new Error('Not found');
-    }
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${query}`);
+    if (!response.ok) throw new Error('Not found');
+    
     const pokemonData = await response.json();
     lastSearchedPokemon = pokemonData;
-
+    
     grid.innerHTML = buildPokemonCardHtml(pokemonData, true);
   } catch (error) {
     console.error('Error searching Pokémon:', error);
@@ -56,15 +75,11 @@ async function searchPokemon() {
 }
 
 function buildPokemonCardHtml(pokemon, showAddButton) {
-  const types = pokemon.types.map(t => t.type.name); 
+  const types = pokemon.types.map(t => t.type.name);
 
   let typesHtml = '';
-  if (types[0]) {
-    typesHtml += `<li class = pokemon-type>${types[0]}</li>`;
-  }
-  if (types[1]) {
-    typesHtml += `<li class = pokemon-type>${types[1]}</li>`;
-  }
+  if (types[0]) typesHtml += `<li class="pokemon-type">${types[0]}</li>`;
+  if (types[1]) typesHtml += `<li class="pokemon-type">${types[1]}</li>`;
 
   const addButtonHtml = showAddButton
     ? `<button class="add-to-team" data-id="${pokemon.id}">Add to team</button>`
@@ -75,9 +90,7 @@ function buildPokemonCardHtml(pokemon, showAddButton) {
       <img class="pokemon__img" src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
       <h4 class="pokemon__name">${pokemon.name}</h4>
       <p class="pokemon__id">#${pokemon.id}</p>
-      <ul class = pokemon-types>
-        ${typesHtml}
-      </ul>
+      <ul class="pokemon-types">${typesHtml}</ul>
       ${addButtonHtml}
     </div>
   `;
@@ -89,17 +102,15 @@ function renderTeam() {
     const types = pokemon.types.map(t => t.type.name);
 
     let typesHtml = '';
-    if (types[0]) typesHtml += `<li class = pokemon-type>${types[0]}</li>`;
-    if (types[1]) typesHtml += `<li class = pokemon-type>${types[1]}</li>`;
+    if (types[0]) typesHtml += `<li class="pokemon-type">${types[0]}</li>`;
+    if (types[1]) typesHtml += `<li class="pokemon-type">${types[1]}</li>`;
 
     return `
       <div class="pokemon-card">
         <img class="pokemon__img" src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
         <h4 class="pokemon__name">${pokemon.name}</h4>
         <p class="pokemon__id">#${pokemon.id}</p>
-        <ul class = pokemon-types>
-            ${typesHtml}
-        </ul>
+        <ul class="pokemon-types">${typesHtml}</ul>
         <button class="remove-from-team" data-index="${index}">Remove</button>
       </div>
     `;
@@ -143,9 +154,10 @@ teamContainer.addEventListener('click', (event) => {
 
 searchBtn.addEventListener('click', searchPokemon);
 searchInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') {
-    searchPokemon();
-  }
+  if (e.key === 'Enter') searchPokemon();
 });
+
+sortBtn.addEventListener('click', applyTypeSort);
+typeFilter.addEventListener('change', applyTypeSort);
 
 fetchKantoPokemon();

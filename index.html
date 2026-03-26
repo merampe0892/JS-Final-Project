@@ -32,17 +32,38 @@
     <p class="header__para">Displaying the first 151 Pokémon</p>
   </header>
 
-  <main>
+ <main>
+    <div class="type-sorter">
+      <label for="typeFilter" class="typeFilter">Sort by type:</label>
+      <select id="typeFilter">
+        <option value="">All Types</option>
+        <option value="normal">Normal</option>
+        <option value="fire">Fire</option>
+        <option value="water">Water</option>
+        <option value="grass">Grass</option>
+        <option value="electric">Electric</option>
+        <option value="ice">Ice</option>
+        <option value="fighting">Fighting</option>
+        <option value="poison">Poison</option>
+        <option value="ground">Ground</option>
+        <option value="flying">Flying</option>
+        <option value="psychic">Psychic</option>
+        <option value="bug">Bug</option>
+        <option value="rock">Rock</option>
+        <option value="ghost">Ghost</option>
+        <option value="dragon">Dragon</option>
+      </select>
+      <button id="sortBtn">Sort</button>
+    </div>
 
     <div class="search-bar">
       <input
         id="pokemonName"
         type="text"
-        class="pokemonName"
+        class="pokemon__search"
         placeholder="Search Pokémon by name or ID..."
       />
-      <button id="searchBtn">Search</button><br />
-
+      <button class="pokemon-btn" id="searchBtn">Search</button><br />
       <img
         class="input__img"
         src=""
@@ -58,14 +79,14 @@
       <h1 class="team-title">My Team</h1>
       <div class="team__container">
         <div class="pokemon-card">
-        <img class="pokemon__img" src="" alt="">
-        <h4 class="pokemon__name">name</h4>
-        <p class="pokemon__id">id</p>
-        <ul class = pokemon-types>
-          <li class=pokemon-type>type</li>
-          <li class=pokemon-type>type</li>
-        </ul>
-      </div> 
+          <img class="pokemon__img" src="" alt="">
+          <h4 class="pokemon__name">name</h4>
+          <p class="pokemon__id">id</p>
+          <ul class = pokemon-types>
+            <li class=pokemon-type>type</li>
+            <li class=pokemon-type>type</li>
+          </ul>
+        </div>
       </div>
     </div>
 
@@ -82,21 +103,19 @@
     </div>
   </main>
 
- <footer class="footer">
+  <footer class="footer">
     <div class="footer__container">
       <div class="footer__section">
-        <h3>🎮 Kanto Pokédex</h3>
-        <p>Discover all 151 original Pokémon from Generation 1!</p>
+        <h3 class="footer__title">🎮 Kanto Pokédex</h3>
+        <p class="footer__para">Discover all 151 original Pokémon from Generation 1!</p>
       </div>
-
       <div class="footer__section">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a class="footer__link" href="#logo">Search Pokémon</a></li>
+        <h4 class="footer__title">Quick Links</h4>
+        <ul class="footer__links">
+          <li><a class="footer__link" href="#logo">Home</a></li>
           <li><a class="footer__link" href="#team">My Team</a></li>
         </ul>
       </div>
-
       <div class="footer__section">
         <h4>Powered by</h4>
         <a href="https://pokeapi.co/" target="_blank" rel="noopener">
@@ -104,7 +123,6 @@
         </a>
       </div>
     </div>
-
     <div class="footer__bottom">
       <p>&copy; 2026 Moises Ramirez.</p>
     </div>
