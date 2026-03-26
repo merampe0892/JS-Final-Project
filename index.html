@@ -3,39 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Kanto Pokemon</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
- <header class="header">
+  <header class="header" id="logo">
+    <div class="logo">
+      <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="glow" cx="50%" cy="50%">
+        <stop offset="0%" stop-color="#FF4444"/>
+        <stop offset="70%" stop-color="#CC0000"/>
+        <stop offset="100%" stop-color="#990000"/>
+      </radialGradient>
+    </defs>
+    <circle cx="100" cy="100" r="92" fill="url(#glow)" stroke="#333" stroke-width="8"/>
+    <ellipse cx="100" cy="60" rx="70" ry="40" fill="#FFF" opacity="0.4"/>
+    <path d="M 100 100 Q 100 10 100 10 A 92 92 0 0 1 100 92 Z" fill="#EE1515"/>
+    <path d="M 100 100 Q 100 190 100 190 A 92 92 0 0 1 100 108 Z" fill="#F0F0F0"/>
+    <rect x="12" y="92" width="176" height="16" fill="#333" rx="8"/>
+    <circle cx="100" cy="100" r="28" fill="#FFF" stroke="#000" stroke-width="4"/>
+    <circle cx="100" cy="100" r="16" fill="#222"/>
+    <circle cx="100" cy="100" r="8" fill="#FFF" opacity="0.8"/>
+  </svg>
+    </div>
     <h1 class="title">Kanto Pokédex</h1>
     <p class="header__para">Displaying the first 151 Pokémon</p>
   </header>
-    <div class="search-bar">
-        <input type="text" class="pokemonName" placeholder="Search Pokémon by name..." onchange="onSearchChange(event)">
-        <button onclick="fetchData()">Search</button>
 
-        <img class="input__img" src="" alt="Pokemon Sprite" id="pokemonSprite">
-    </div>
-    
   <main>
 
-    <div class="pokemon__grid">
-        <div class="pokemon-card">
-            <img src="" alt="Pokémon sprites">
-            <h4>pokemonName</h4>
-            <p>#</p>
-            <ul>
-                <li>type</li>
-                <li>type</li>
-            </ul>
-        </div>
+    <div class="search-bar">
+      <input
+        id="pokemonName"
+        type="text"
+        class="pokemonName"
+        placeholder="Search Pokémon by name or ID..."
+      />
+      <button id="searchBtn">Search</button><br />
+
+      <img
+        class="input__img"
+        src=""
+        alt="Pokemon Sprite"
+        id="pokemonSprite"
+        style="display: none"
+      />
+      <div id="error"></div>
     </div>
-    
+
+    <div class="team" id="team">
+      <p class="team__para">Create your very own team with and choose from the original 151 Pokemon. Just search for your favorite Pokemon, and add them to your team.</p>
+      <h1 class="team-title">My Team</h1>
+      <div class="team__container">
+        <div class="pokemon-card">
+        <img class="pokemon__img" src="" alt="">
+        <h4 class="pokemon__name">name</h4>
+        <p class="pokemon__id">id</p>
+        <ul class = pokemon-types>
+          <li class=pokemon-type>type</li>
+          <li class=pokemon-type>type</li>
+        </ul>
+      </div> 
+      </div>
+    </div>
+
+    <div class="pokemon__grid">
+      <div class="pokemon-card">
+        <img class="pokemon__img" src="" alt="">
+        <h4 class="pokemon__name">name</h4>
+        <p class="pokemon__id">id</p>
+        <ul class = pokemon-types>
+          <li class=pokemon-type>type</li>
+          <li class=pokemon-type>type</li>
+        </ul>
+      </div> 
+    </div>
   </main>
 
-    <script src="app.js"></script>
+ <footer class="footer">
+    <div class="footer__container">
+      <div class="footer__section">
+        <h3>🎮 Kanto Pokédex</h3>
+        <p>Discover all 151 original Pokémon from Generation 1!</p>
+      </div>
 
+      <div class="footer__section">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a class="footer__link" href="#logo">Search Pokémon</a></li>
+          <li><a class="footer__link" href="#team">My Team</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__section">
+        <h4>Powered by</h4>
+        <a href="https://pokeapi.co/" target="_blank" rel="noopener">
+          PokéAPI
+        </a>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p>&copy; 2026 Moises Ramirez.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
 </body>
 </html>
